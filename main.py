@@ -11,10 +11,8 @@ def main():
     logger = logging.getLogger(__name__)
 
     logger.info("Starting data loading import")
-    loader = DataLoader(dataset_path="data/raw/", datasets=['category_tree', 'events'])
-    logger.info("Data loaded successfully")
-    data = loader.load_data()
-    print(data)
+    data = DataLoader("data/raw/").load_data()
+    print(data['event'].head())
     logger.info("Starting preprocessing")
 
 if __name__ == "__main__":
