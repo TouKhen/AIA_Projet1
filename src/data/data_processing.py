@@ -55,8 +55,10 @@ class DataProcessing:
 
     def preprocess_items(self):
         data = self.load_specific_data()
+        # Concat items_props_1 and items_props_1 to have only one file
         new_data = pd.concat([data['items_props_1'], data['items_props_2']], ignore_index=True)
 
+        # Add datetime and day, month and year to data
         new_data["datetime"] = pd.to_datetime(new_data["timestamp"], unit="ms")
         new_data['day'] = new_data['datetime'].dt.day_name()
         new_data['month'] = new_data['datetime'].dt.month_name()
@@ -155,6 +157,7 @@ class DataProcessing:
         tier5_cat = data[data['parentid'].isin(tier4_cat)]['categoryid']
         tier6_cat = data[data['parentid'].isin(tier5_cat)]['categoryid']
 
+        # Add category level based on child/parent
         data['category_level'] = [
             "level_1" if x in primary_categories.values
             else "level_2" if x in tier2_cat.values
