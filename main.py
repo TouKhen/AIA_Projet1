@@ -1,4 +1,8 @@
 import logging
+
+from pandas.io.xml import preprocess_data
+
+from src.data.data_processing import DataProcessing
 from src.data.data_loader import DataLoader
 
 
@@ -11,13 +15,9 @@ def main():
     logger = logging.getLogger(__name__)
 
     logger.info("Starting data loading import")
-    data_loader = DataLoader(dataset_path="data/raw/")
-    events, category_tree, items_prop_1, items_prop_2 = data_loader.load_data()
-    logger.info("Data loaded successfully")
-
+    data = DataProcessing(DataLoader("data/raw/").load_data())
     logger.info("Starting preprocessing")
-
-    print(events.head())
+    data.preprocess_data()
 
 if __name__ == "__main__":
     main()
